@@ -67,7 +67,7 @@ export class AttorneyComponent {
           console.log("Error Ocurred" + err);
         }
       )
-
+}
   // refresh() {
   //   window.location.reload();
   // }
