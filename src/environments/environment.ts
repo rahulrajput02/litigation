@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   getDebtorAPI: 'http://52.172.13.43:6001/getDebtor',
   getSecuredPartyAPI: 'http://52.172.13.43:6001/getsecuredparties',
   getCollateralAPI: 'http://52.172.13.43:6001/getcollaterol',

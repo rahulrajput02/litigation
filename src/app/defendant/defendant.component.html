@@ -23,12 +23,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of fillingData">
-          <td>{{data.id}}</td>
+        <tr *ngFor="let data of fillingData; index as i">
+          <td>{{i+1}}</td>
           <td>{{data.plaintiffName}}</td>
           <td>{{data.letterType}}</td>
           <td>
-            <a class="menu_links" (click)="acknowledge(data.letterId)">
+            <a class="menu_links" (click)="acknowledge(i)">
               <img src="http://cdn.onlinewebfonts.com/svg/img_167389.png" style="width: 26px" />
             </a>
           </td>

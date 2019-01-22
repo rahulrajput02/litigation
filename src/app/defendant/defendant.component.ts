@@ -22,23 +22,16 @@ export class DefendantComponent {
 
 
   ngOnInit() {
-    this.validate = false;
-    //
-    // this.httpClient.get(environment.getDataFromDB)
-    //     .subscribe(
-    //         response => {
-    //             console.log(response);
-    //             this.fillingData = [{
-    //             "defendantName" : 'Rahul Rajput', "defendantAddress" : '#3245, Sec 21-D, Chandigarh', "letterType": 'Breach of Contract' }];
-    //         },
-    //         err => {
-    //             console.log("Error Ocurred" + err);
-    //         }
-    //     )
-
-    this.fillingData = [{
-      "id": '1', "plaintiffName": 'Vikram Singh', "letterType": 'Breach of Contract'
-    }];
+    this.httpClient.get('http://52.172.13.43:8085/api/DemandLetter?forwardDemandLetterToDefendant=true')
+        .subscribe(
+            response => {
+                console.log(response);
+                this.fillingData = response;
+            },
+            err => {
+                console.log("Error Ocurred" + err);
+            }
+        )
   }
 
   // validateButton(letterId) {
@@ -52,7 +45,7 @@ export class DefendantComponent {
   //     )
   // }
 
-  acknowledge(letterId) {
+  acknowledge(index) {
     alert('You have succesfully acknowledged your demand letter');
 
   }

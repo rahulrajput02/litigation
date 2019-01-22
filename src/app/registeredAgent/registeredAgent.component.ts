@@ -22,21 +22,20 @@ export class RegisteredAgentComponent {
 
   ngOnInit() {
     this.validate = false;
+    this.httpClient.get('http://52.172.13.43:8085/api/DemandLetter?registeredAgent=CSC')
+        .subscribe(
+            response => {
+                console.log(response);
+                this.fillingData = response;
+            },
+            err => {
+                console.log("Error Ocurred" + err);
+            }
+        )
 
-    // this.httpClient.get(environment.getDataFromComposer)
-    //     .subscribe(
-    //         response => {
-    //             console.log(response);
-    //             this.fillingData = response;
-    //         },
-    //         err => {
-    //             console.log("Error Ocurred" + err);
-    //         }
-    //     )
-
-    this.fillingData = [{
-      "id": '1',"defendantName": 'Rahul Rajput', "plaintiffName": 'Vikram Singh', "letterType": 'Breach of Contract'
-    }];
+    // this.fillingData = [{
+    //   "id": '1',"defendantName": 'Rahul Rajput', "plaintiffName": 'Vikram Singh', "letterType": 'Breach of Contract'
+    // }];
   }
 
   // validateButton(letterId) {
@@ -50,8 +49,20 @@ export class RegisteredAgentComponent {
   //     )
   // }
 
-  forwardButton(letterId) {
-    alert('Demand Letter has succesfully sent to Defendant.')
+  forwardButton(index) {
+    var obj = this.fillingData[index];
+    obj.demandLetterAcknowledgeStatus = 'true';
+    console.log(obj);
+    this.httpClient.put('http://52.172.13.43:8085/api/DemandLetter/' + obj.letterId, obj)
+        .subscribe(
+            response => {
+                console.log(response);
+                alert('Demand Letter has succesfully sent to Defendant.');
+            },
+            err => {
+                console.log("Error Ocurred" + err);
+            }
+        )
   }
 
   pdfDownload(letterId) {

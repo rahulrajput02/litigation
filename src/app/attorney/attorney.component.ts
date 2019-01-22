@@ -42,52 +42,18 @@ export class AttorneyComponent {
     });
   }
 
-  // toggleButton() {
-  //   this.secondFormVisible = true;
-  //   this.firstFormVisible = false;
-  //
-  //   //GET METHOD FOR DEBTOR TYPE
-  //
-  //   this.httpClient.get(environment.getDebtorAPI)
-  //     .subscribe(
-  //       response => {
-  //         console.log(response);
-  //         this.debtorOption = response;
-  //       },
-  //       err => {
-  //         console.log("Error Ocurred" + err);
-  //       }
-  //     )
-  //
-  //   //GET METHOD FOR SECURED PARTY TYPE
-  //
-  //   this.httpClient.get(environment.getSecuredPartyAPI)
-  //     .subscribe(
-  //       response => {
-  //         console.log(response);
-  //         this.securedPartyOption = response;
-  //       },
-  //       err => {
-  //         console.log("Error Ocurred" + err);
-  //       }
-  //     )
-  // }
-  // refresh() {
-  //   window.location.reload();
-  // }
-
   ngOnInit() {
 
-    this.httpClient.get(environment.getStatesAPI)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.selectedState = response;
-        },
-        err => {
-          console.log("Error Ocurred" + err);
-        }
-      )
+    // this.httpClient.get(environment.getStatesAPI)
+    //   .subscribe(
+    //     response => {
+    //       console.log(response);
+    //       this.selectedState = response;
+    //     },
+    //     err => {
+    //       console.log("Error Ocurred" + err);
+    //     }
+    //   )
   }
 
   typeChanged() {
@@ -138,32 +104,32 @@ export class AttorneyComponent {
 
     console.log(myobj);
   }
-    //
+
     // this.httpClient.post(environment.postLetter, myobj, options)
     //   .subscribe(
     //     response => {
     //       console.log(response);
     //       this.letterId = response;
-    //
-    //       var hashToBlock = {
-    //         "$class": "org.example.basic.DemandLetter",
-    //         "letterId": this.letterId,
-    //         "plaintiff": plaintiffName,
-    //         "defendant": defendantName,
-    //         "caseType": demandLetterType,
-    //         "registeredAgent": "CSC",
-    //         "demandLetterAcknowledgeStatus": "false",
-    //         "owner": "RA"
-    //       }
-    //
-    //       this.httpClient.post(environment.postToBlockChain, hashToBlock)
-    //         .subscribe(
-    //           response => {
-    //             console.log(response);
-    //           }
-    //         )
-    //       }
-    //     )
+
+          var hashToBlock = {
+            "$class": "org.example.basic.DemandLetter",
+            "letterId": "1234",
+            "plaintiff": plaintiffName,
+            "defendant": defendantName,
+            "caseType": demandLetterType,
+            "registeredAgent": "CSC",
+            "demandLetterAcknowledgeStatus": "false",
+            "forwardDemandLetterToDefendant ": "false"
+          }
+
+          this.httpClient.post('http://52.172.13.43:8085/api/DemandLetter', hashToBlock)
+            .subscribe(
+              response => {
+                console.log(response);
+              }
+            )
+        //   }
+        // )
   }
 
   validate() {

@@ -24,18 +24,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of fillingData">
-          <td>{{data.id}}</td>
-          <td>{{data.defendantName}}</td>
-          <td>{{data.plaintiffName}}</td>
-          <td>{{data.letterType}}</td>
+        <tr *ngFor="let data of fillingData; index as i">
+          <td>{{i+1}}</td>
+          <td>{{data.defendant}}</td>
+          <td>{{data.plaintiff}}</td>
+          <td>{{data.caseType}}</td>
           <td>
             <a class="menu_links" (click)="pdfDownload(data.letterId)">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 27px" />
             </a>
           </td>
           <td>
-            <a class="menu_links" (click)="forwardButton(data.letterId)">
+            <a class="menu_links" (click)="forwardButton(i)">
               <img src="https://cdn4.iconfinder.com/data/icons/office-line-color-vol-2/70/send__message__mail__paperplane__rocket-512.png" style="width: 37px" />
             </a>
           </td>
