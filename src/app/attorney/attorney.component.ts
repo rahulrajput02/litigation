@@ -12,7 +12,7 @@ export class AttorneyComponent {
   title = 'createFilling';
   secondFormVisible = false;
   firstFormVisible = true;
-  debtorOption;
+  letterId;
   securedPartyOption;
   juisdictions;
   selectedState;
@@ -31,6 +31,10 @@ export class AttorneyComponent {
     this.createForm();
   }
 
+  fileChange(event): void {
+
+  }
+
   createForm() {
     this.angularForm = this.fb.group({
       defendantName: ['', Validators.required],
@@ -38,36 +42,36 @@ export class AttorneyComponent {
     });
   }
 
-  toggleButton() {
-    this.secondFormVisible = true;
-    this.firstFormVisible = false;
-
-    //GET METHOD FOR DEBTOR TYPE
-
-    this.httpClient.get(environment.getDebtorAPI)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.debtorOption = response;
-        },
-        err => {
-          console.log("Error Ocurred" + err);
-        }
-      )
-
-    //GET METHOD FOR SECURED PARTY TYPE
-
-    this.httpClient.get(environment.getSecuredPartyAPI)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.securedPartyOption = response;
-        },
-        err => {
-          console.log("Error Ocurred" + err);
-        }
-      )
-}
+  // toggleButton() {
+  //   this.secondFormVisible = true;
+  //   this.firstFormVisible = false;
+  //
+  //   //GET METHOD FOR DEBTOR TYPE
+  //
+  //   this.httpClient.get(environment.getDebtorAPI)
+  //     .subscribe(
+  //       response => {
+  //         console.log(response);
+  //         this.debtorOption = response;
+  //       },
+  //       err => {
+  //         console.log("Error Ocurred" + err);
+  //       }
+  //     )
+  //
+  //   //GET METHOD FOR SECURED PARTY TYPE
+  //
+  //   this.httpClient.get(environment.getSecuredPartyAPI)
+  //     .subscribe(
+  //       response => {
+  //         console.log(response);
+  //         this.securedPartyOption = response;
+  //       },
+  //       err => {
+  //         console.log("Error Ocurred" + err);
+  //       }
+  //     )
+  // }
   // refresh() {
   //   window.location.reload();
   // }
@@ -116,69 +120,50 @@ export class AttorneyComponent {
       demandLetterType = target.querySelector('#lw').value;
     }
 
+    const fileList: FileList = target.querySelector('#myFile').files;
+    console.log(fileList.length);
+    if (fileList.length > 0) {
+      const file = fileList[0];
+      const formData = new FormData();
+      formData.append('file', file, file.name);
+
+      // let headers = new Headers();
+      // headers.append('Content-Type', 'multipart/form-data');
+      // headers.append('Accept', 'application/json');
+      // let options = new RequestOptions({ headers: headers });
+
     const myobj = {
-      "defendantName": defendantName, "plaintiffName": plaintiffName, "demandLetterType": demandLetterType
+      "defendantName": defendantName, "plaintiffName": plaintiffName, "demandLetterType": demandLetterType, "letter": formData
     };
 
     console.log(myobj);
-
-    // this.buttonClicked = true;
+  }
     //
-    // this.httpClient.post(environment.postNewFilling, myobj, { responseType: 'text' })
+    // this.httpClient.post(environment.postLetter, myobj, options)
     //   .subscribe(
     //     response => {
     //       console.log(response);
-    //       var hashFromResp = response;
+    //       this.letterId = response;
     //
     //       var hashToBlock = {
-    //         "$class": "org.example.mynetwork.NewFilling",
-    //         "hashId": response
+    //         "$class": "org.example.basic.DemandLetter",
+    //         "letterId": this.letterId,
+    //         "plaintiff": plaintiffName,
+    //         "defendant": defendantName,
+    //         "caseType": demandLetterType,
+    //         "registeredAgent": "CSC",
+    //         "demandLetterAcknowledgeStatus": "false",
+    //         "owner": "RA"
     //       }
     //
     //       this.httpClient.post(environment.postToBlockChain, hashToBlock)
     //         .subscribe(
     //           response => {
-    //             this.httpClient.get(environment.getNewFillingFromBlock + hashFromResp)
-    //               .subscribe(
-    //                 response => {
-    //                   var submitTrans = {
-    //                     "$class": "org.example.mynetwork.StoreHash",
-    //                     "newFilling": "resource:org.example.mynetwork.NewFilling#" + response["hashId"],
-    //                     "transactionId": "",
-    //                     "timestamp": new Date()
-    //                   }
-    //
-    //                   this.httpClient.post(environment.postHashToBlock, submitTrans)
-    //                     .subscribe(
-    //                       response => {
-    //                         this.savedSuccess = true;
-    //                         this.saveState = false;
-    //                         this.validateBlock = response;
-    //                         console.log(response["transactionId"]);
-    //
-    //                         const objTran = { "transactionId": response["transactionId"] };
-    //
-    //                         this.httpClient.post(environment.postTransactionId, objTran, { responseType: 'text' })
-    //                           .subscribe(
-    //                             response => {
-    //                               console.log(response);
-    //                               window.setInterval(reload, 2500);
-    //
-    //                               function reload() {
-    //                                 window.location.reload();
-    //                               }
-    //                             }
-    //                           );
-    //                       });
-    //                 });
+    //             console.log(response);
     //           }
-    //         );
-      //   },
-      //
-      //   err => {
-      //     console.log("Error Ocurred" + err);
-      //   }
-      // )
+    //         )
+    //       }
+    //     )
   }
 
   validate() {

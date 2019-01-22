@@ -22,13 +22,12 @@ export class RegisteredAgentComponent {
 
   ngOnInit() {
     this.validate = false;
-    //
-    // this.httpClient.get(environment.getDataFromDB)
+
+    // this.httpClient.get(environment.getDataFromComposer)
     //     .subscribe(
     //         response => {
     //             console.log(response);
-    //             this.fillingData = [{
-    //             "defendantName" : 'Rahul Rajput', "defendantAddress" : '#3245, Sec 21-D, Chandigarh', "letterType": 'Breach of Contract' }];
+    //             this.fillingData = response;
     //         },
     //         err => {
     //             console.log("Error Ocurred" + err);
@@ -55,9 +54,14 @@ export class RegisteredAgentComponent {
     alert('Demand Letter has succesfully sent to Defendant.')
   }
 
-  pdfDownload(pdfPath) {
-    console.log(pdfPath);
-    const data = { "Pdf_Path": pdfPath };
+  pdfDownload(letterId) {
+    // this.httpClient.get('api/' + letterId)
+    //   .subscribe(
+    //     response => {
+    //       console.log(response);
+    //     }
+    //   )
+    const data = { "Pdf_Path": "dfd" };
     this.httpClient.post(environment.postPdf, data, { responseType: 'text' })
       .subscribe(response => {
         console.log(response);
