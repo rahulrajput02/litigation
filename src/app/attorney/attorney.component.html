@@ -1,0 +1,71 @@
+<a href="/">
+  <img class="logo" alt="Logo" src="https://ocp.cscglobal.com/cdn/gateway/csc/csc-logo-marketing2.png">
+</a>
+<form (submit)="demandLetter($event)" [formGroup]="angularForm" autocomplete="on" novalidate>
+  <div class="container">
+    <div class="heading">
+      <h1>
+        Send Demand Letter
+      </h1>
+    </div>
+
+    <div class="form-group">
+      <br>
+      <label>
+        <b>Defendant's Name</b>
+      </label>
+      <input class="form-control" formControlName="defendantName" type="text" id="defendantName">
+    </div>
+
+    <div *ngIf="angularForm.controls['defendantName'].invalid && (angularForm.controls['defendantName'].dirty || angularForm.controls['defendantName'].touched)" class="alert alert-danger">
+      <div *ngIf="angularForm.controls['defendantName'].errors.required">
+        Defendant's Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <b>Plaintiff's Name</b>
+      </label>
+      <input class="form-control" formControlName="plaintiffName" type="text" id="plaintiffName">
+    </div>
+
+    <div *ngIf="angularForm.controls['plaintiffName'].invalid && (angularForm.controls['plaintiffName'].dirty || angularForm.controls['plaintiffName'].touched)" class="alert alert-danger">
+      <div *ngIf="angularForm.controls['plaintiffName'].errors.required">
+        Plaintiff's Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <b>Demand Letter Type</b>
+      </label>
+      <div class="form-check form-check-inline" style="padding-left: 10%">
+        <input class="form-check-input" type="radio" name="letterType" id="boc" value="Breach of Contract" checked>
+        <label class="form-check-label" for="boc"> Breach of Contract </label>
+      </div>
+      <div class="form-check form-check-inline" style="padding-left: 5%">
+        <input class="form-check-input" type="radio" name="letterType" id="lw" value="Legal Wrong">
+        <label class="form-check-label" for="lw"> Legal Wrong </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <b>Upload Demand Letter</b>
+      </label><br><br>
+      <input type="file" id="myFile" name="filename2" accept=".pdf">
+    </div><br>
+
+
+    <button routerLink="" type="button" style="margin-right: 8%" class="btn btn-secondary">
+      Cancel
+    </button>
+
+    <button type="submit" class="btn btn-success" [disabled]="angularForm.controls['defendantName'].pristine || angularForm.controls['defendantName'].invalid || angularForm.controls['plaintiffName'].pristine || angularForm.controls['plaintiffName'].invalid"
+      class="btn btn-success">
+      Submit
+    </button>
+    <br />
+  </div>
+</form>

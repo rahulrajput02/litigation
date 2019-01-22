@@ -1,0 +1,54 @@
+.heading {
+  text-align: center;
+  color: #003b5d;
+}
+
+.container {
+  max-width: 37%;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.jumbotron {
+  padding: 2%;
+}
+
+/* .form-group[_ngcontent-c0] {
+    margin-bottom: 1rem;
+} */
+
+[hidden] {
+  display: none !important;
+}
+
+.footerImage {
+  float: right;
+  width: 16%;
+  margin-top: 7%;
+  margin-right: 43%;
+}
+
+.spinner {
+  width: 8.6%;
+  margin-left: 4%;
+}
+
+.logo {
+  position: relative;
+  left: 1.5%;
+  margin-top: 1%;
+  width: 3.5%;
+}
+
+.btn-success {
+  background-color: #01b2aa;
+}
+
+.savedMessage {
+  background-color: #ddffdd;
+  border-left: 6px solid #4CAF50;
+  text-align: center;
+  margin-top: 4%;
+}

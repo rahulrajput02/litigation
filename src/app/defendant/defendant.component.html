@@ -1,0 +1,44 @@
+<div>
+  <a href="">
+    <img class="logo2" src="https://ocp.cscglobal.com/cdn/gateway/csc/csc-logo-marketing2.png">
+  </a>
+
+  <div class="container2">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="heading">
+        <h2>
+          Demand Letters
+        </h2>
+      </div>
+    </div>
+    <br>
+    <table id="example" class="table table-striped" style="width:100%">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Plaintiff Name</th>
+          <th>Letter Type</th>
+          <th>Acknowledge</th>
+          <th>View</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of fillingData">
+          <td>{{data.id}}</td>
+          <td>{{data.plaintiffName}}</td>
+          <td>{{data.letterType}}</td>
+          <td>
+            <a class="menu_links" (click)="acknowledge(data.letterId)">
+              <img src="http://cdn.onlinewebfonts.com/svg/img_167389.png" style="width: 26px" />
+            </a>
+          </td>
+          <td>
+            <a class="menu_links" (click)="pdfDownload(data.Pdf_Path)">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 30px" />
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
