@@ -98,12 +98,13 @@ export class AttorneyComponent {
       // headers.append('Accept', 'application/json');
       // let options = new RequestOptions({ headers: headers });
 
+    }
+
     const myobj = {
-      "defendantName": defendantName, "plaintiffName": plaintiffName, "demandLetterType": demandLetterType, "letter": formData
+      "defendantName": defendantName, "plaintiffName": plaintiffName, "demandLetterType": demandLetterType
     };
 
     console.log(myobj);
-  }
 
     // this.httpClient.post(environment.postLetter, myobj, options)
     //   .subscribe(
@@ -111,25 +112,30 @@ export class AttorneyComponent {
     //       console.log(response);
     //       this.letterId = response;
 
-          var hashToBlock = {
-            "$class": "org.example.basic.DemandLetter",
-            "letterId": "1234",
-            "plaintiff": plaintiffName,
-            "defendant": defendantName,
-            "caseType": demandLetterType,
-            "registeredAgent": "CSC",
-            "demandLetterAcknowledgeStatus": "false",
-            "forwardDemandLetterToDefendant ": "false"
-          }
+    var hashToBlock = {
+      "$class": "org.hyperledger_composer.sop.DemandLetter",
+      "plaintiff": plaintiffName,
+      "defendant": defendantName,
+      "caseType": demandLetterType,
+      "registeredAgent": "CSC",
+      "letterId": "3355",
+      "demandLetterAcknowledgeStatus": "false",
+      "forwardDemandLetterToDefendant": "false"
+    }
 
-          this.httpClient.post('http://52.172.13.43:8085/api/DemandLetter', hashToBlock)
-            .subscribe(
-              response => {
-                console.log(response);
-              }
-            )
-        //   }
-        // )
+    console.log(hashToBlock);
+
+    this.httpClient.post('http://52.172.13.43:8085/api/DemandLetter', hashToBlock)
+      .subscribe(
+        response => {
+          console.log(response);
+          if (confirm('Your demand letter sent to Registered Agent.')) {
+            window.location.reload();
+          }
+        }
+      )
+    //   }
+    // )
   }
 
   validate() {
