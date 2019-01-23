@@ -2,6 +2,9 @@
   <a href="">
     <img class="logo2" src="https://ocp.cscglobal.com/cdn/gateway/csc/csc-logo-marketing2.png">
   </a>
+  <a href="/">
+    <img class="backImage" src="https://image.flaticon.com/icons/png/512/58/58452.png">
+  </a>
 
   <div class="container2">
     <div class="jumbotron jumbotron-fluid">
@@ -29,10 +32,10 @@
           <td>{{data.caseType}}</td>
           <td>
             <a class="menu_links" (click)="acknowledge(i)" *ngIf="data.demandLetterAcknowledgeStatus == 'false'">
-              <img src="http://cdn.onlinewebfonts.com/svg/img_167389.png" style="width: 26px; margin-left:2vw" />
+              <img src="assets/img_167389.png" style="width: 26px; margin-left:2vw" />
             </a>
             <a class="menu_links" *ngIf="data.demandLetterAcknowledgeStatus == 'true'">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Bright_green_checkbox-checked.svg/2000px-Bright_green_checkbox-checked.svg.png" style="width: 24px; margin-left:2vw; cursor:default" />
+              <img src="assets/tick.png" style="width: 24px; margin-left:2vw; cursor:default" />
             </a>
           </td>
           <td>

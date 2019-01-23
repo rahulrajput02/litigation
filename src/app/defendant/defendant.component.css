@@ -10,6 +10,13 @@
   width: 3.5%;
 }
 
+.backImage {
+  width: 2.5%;
+  float: right;
+  margin-top: 1%;
+  margin-right: 4%;
+}
+
 
 .container {
   max-width: 40%;
