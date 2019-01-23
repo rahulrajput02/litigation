@@ -10,44 +10,47 @@ import { Router } from '@angular/router';
 })
 export class DefendantComponent {
   transactionLink;
-  acknowledged;
-  validate;
-  studentData;
-  fillingData;
-  transactionData;
-  fileUrl;
-
 
   constructor(private httpClient: HttpClient, private routes: Router) { }
 
 
   ngOnInit() {
     this.httpClient.get('http://52.172.13.43:8085/api/DemandLetter?filter[where][forwardDemandLetterToDefendant]=true')
-        .subscribe(
-            response => {
-                console.log(response);
-                this.fillingData = response;
-            },
-            err => {
-                console.log("Error Ocurred" + err);
-            }
-        )
+      .subscribe(
+        response => {
+          console.log(response);
+          this.fillingData = response;
+        },
+        err => {
+          console.log("Error Ocurred" + err);
+        }
+      )
   }
 
-  // validateButton(letterId) {
-  //   this.httpClient.get(environment.getTransactionDetails + transactionId)
-  //     .subscribe(
-  //       response => {
-  //         this.transactionData = JSON.stringify(response, null, "\t");
-  //         alert(this.transactionData);
-  //         console.log(this.transactionData);
-  //       }
-  //     )
-  // }
-
   acknowledge(index) {
-    alert('You have succesfully acknowledged your demand letter');
+    var obj = this.fillingData[index];
+    var id = obj.letterId;
 
+    var postObj = {
+      "$class": "org.hyperledger_composer.sop.AcknowledgeReceivalByDefendant",
+      "letter": "resource:org.hyperledger_composer.sop.DemandLetter#" + id,
+      "demandLetterAcknowledgeStatus": "true"
+    }
+
+    console.log(postObj);
+
+    this.httpClient.post('http://52.172.13.43:8085/api/AcknowledgeReceivalByDefendant ', postObj)
+      .subscribe(
+        response => {
+          console.log(response);
+          if (confirm('You have succesfully acknowledged demand letter from ' + obj.plaintiff + '.' )) {
+            window.location.reload();
+          }
+        },
+        err => {
+          console.log("Error Ocurred" + err);
+        }
+      )
   }
 
   pdfDownload(pdfPath) {

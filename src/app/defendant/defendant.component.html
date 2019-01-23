@@ -28,13 +28,19 @@
           <td>{{data.plaintiff}}</td>
           <td>{{data.caseType}}</td>
           <td>
-            <a class="menu_links" (click)="acknowledge(i)">
-              <img src="http://cdn.onlinewebfonts.com/svg/img_167389.png" style="width: 26px" />
+            <a class="menu_links" (click)="acknowledge(i)" *ngIf="data.demandLetterAcknowledgeStatus == 'false'">
+              <img src="http://cdn.onlinewebfonts.com/svg/img_167389.png" style="width: 26px; margin-left:2vw" />
+            </a>
+            <a class="menu_links" *ngIf="data.demandLetterAcknowledgeStatus == 'true'">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Bright_green_checkbox-checked.svg/2000px-Bright_green_checkbox-checked.svg.png" style="width: 24px; margin-left:2vw; cursor:default" />
             </a>
           </td>
           <td>
-            <a class="menu_links" (click)="pdfDownload(data.Pdf_Path)">
+            <a class="menu_links" (click)="pdfDownload(data.Pdf_Path)" *ngIf="data.demandLetterAcknowledgeStatus == 'true'">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 30px" />
+            </a>
+            <a class="menu_links" *ngIf="data.demandLetterAcknowledgeStatus == 'false'" >
+              <img title="Please acknowledge first" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 30px; cursor: no-drop" />
             </a>
           </td>
         </tr>
