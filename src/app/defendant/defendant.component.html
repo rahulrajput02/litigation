@@ -25,8 +25,8 @@
       <tbody>
         <tr *ngFor="let data of fillingData; index as i">
           <td>{{i+1}}</td>
-          <td>{{data.plaintiffName}}</td>
-          <td>{{data.letterType}}</td>
+          <td>{{data.plaintiff}}</td>
+          <td>{{data.caseType}}</td>
           <td>
             <a class="menu_links" (click)="acknowledge(i)">
               <img src="http://cdn.onlinewebfonts.com/svg/img_167389.png" style="width: 26px" />

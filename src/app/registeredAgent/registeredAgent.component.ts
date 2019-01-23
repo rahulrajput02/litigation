@@ -22,16 +22,16 @@ export class RegisteredAgentComponent {
 
   ngOnInit() {
     this.validate = false;
-    this.httpClient.get('http://52.172.13.43:8085/api/DemandLetter?registeredAgent=CSC')
-        .subscribe(
-            response => {
-                console.log(response);
-                this.fillingData = response;
-            },
-            err => {
-                console.log("Error Ocurred" + err);
-            }
-        )
+    this.httpClient.get('http://52.172.13.43:8085/api/DemandLetter?filter[where][forwardDemandLetterToDefendant]=false')
+      .subscribe(
+        response => {
+          console.log(response);
+          this.fillingData = response;
+        },
+        err => {
+          console.log("Error Ocurred" + err);
+        }
+      )
 
     // this.fillingData = [{
     //   "id": '1',"defendantName": 'Rahul Rajput', "plaintiffName": 'Vikram Singh', "letterType": 'Breach of Contract'
@@ -51,18 +51,28 @@ export class RegisteredAgentComponent {
 
   forwardButton(index) {
     var obj = this.fillingData[index];
-    obj.demandLetterAcknowledgeStatus = 'true';
-    console.log(obj);
-    this.httpClient.put('http://52.172.13.43:8085/api/DemandLetter/' + obj.letterId, obj)
-        .subscribe(
-            response => {
-                console.log(response);
-                alert('Demand Letter has succesfully sent to Defendant.');
-            },
-            err => {
-                console.log("Error Ocurred" + err);
-            }
-        )
+    var id = obj.letterId;
+
+    var postObj = {
+      "$class": "org.hyperledger_composer.sop.SendDemandLetterToDefendant",
+      "letter": "resource:org.hyperledger_composer.sop.DemandLetter#" + id,
+      "forwardDemandLetterToDefendant": "true"
+    }
+
+    console.log(postObj);
+
+    this.httpClient.post('http://52.172.13.43:8085/api/SendDemandLetterToDefendant', postObj)
+      .subscribe(
+        response => {
+          console.log(response);
+          if (confirm('Demand Letter has succesfully sent to Defendant.')) {
+            window.location.reload();
+          }
+        },
+        err => {
+          console.log("Error Ocurred" + err);
+        }
+      )
   }
 
   pdfDownload(letterId) {

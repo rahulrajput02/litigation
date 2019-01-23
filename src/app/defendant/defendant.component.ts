@@ -22,7 +22,7 @@ export class DefendantComponent {
 
 
   ngOnInit() {
-    this.httpClient.get('http://52.172.13.43:8085/api/DemandLetter?forwardDemandLetterToDefendant=true')
+    this.httpClient.get('http://52.172.13.43:8085/api/DemandLetter?filter[where][forwardDemandLetterToDefendant]=true')
         .subscribe(
             response => {
                 console.log(response);
