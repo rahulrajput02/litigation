@@ -84,7 +84,7 @@ export class AttorneyComponent {
 
       formData.append('file-to-upload', inputEl.files.item(0));
       console.log(formData);
-      this.httpClient.post('http://localhost:3000/getletter', formData,  {responseType: 'text'})
+      this.httpClient.post('http://localhost:3000/getletter', formData, { responseType: 'text' })
         .subscribe(
           response => {
             console.log(response);
@@ -109,11 +109,12 @@ export class AttorneyComponent {
                   if (confirm('Your demand letter sent to Registered Agent.')) {
                     window.location.reload();
                   }
+                },
+                err => {
+                  alert("This pdf is already uploaded.");
+                  console.log("Error Ocurred" + err);
                 }
               )
-          },
-          err => {
-            console.log("Error Ocurred" + err);
           }
         )
     }
