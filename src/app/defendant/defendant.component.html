@@ -39,7 +39,7 @@
             </a>
           </td>
           <td>
-            <a class="menu_links" (click)="pdfDownload(data.Pdf_Path)" *ngIf="data.demandLetterAcknowledgeStatus == 'true'">
+            <a class="menu_links" (click)="pdfDownload(data.letterId)" *ngIf="data.demandLetterAcknowledgeStatus == 'true'">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 30px" />
             </a>
             <a class="menu_links" *ngIf="data.demandLetterAcknowledgeStatus == 'false'" >

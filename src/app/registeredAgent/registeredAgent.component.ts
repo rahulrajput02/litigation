@@ -75,19 +75,8 @@ export class RegisteredAgentComponent {
       )
   }
 
-  pdfDownload(letterId) {
-    // this.httpClient.get('api/' + letterId)
-    //   .subscribe(
-    //     response => {
-    //       console.log(response);
-    //     }
-    //   )
-    const data = { "Pdf_Path": "dfd" };
-    this.httpClient.post(environment.postPdf, data, { responseType: 'text' })
-      .subscribe(response => {
-        console.log(response);
-
-        this.httpClient.get(environment.getPdf, { responseType: 'arraybuffer' })
+  pdfDownload(id) {
+        this.httpClient.get('http://localhost:3000/getfile/' + id, { responseType: 'arraybuffer' })
           .subscribe(response => {
             console.log(response);
             var blob = new Blob([response], { type: 'application/pdf' });
@@ -96,16 +85,6 @@ export class RegisteredAgentComponent {
             //Open PDF in new tab
             window.open(this.fileUrl);
 
-            //***** Download PDF *****//
-            //var link = document.createElement('a');
-            //document.body.appendChild(link);
-            //link.setAttribute('style', 'display: none');
-            //link.href = this.fileUrl;
-            //link.download = "fillingDocs.pdf";
-            //link.click();
-            //window.URL.revokeObjectURL(this.fileUrl);
-            //link.remove();
           })
-      });
-  }
+      }
 }

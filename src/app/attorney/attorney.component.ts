@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -27,12 +27,8 @@ export class AttorneyComponent {
     plaintiffName: new FormControl()
   });
 
-  constructor(private fb: FormBuilder, private httpClient: HttpClient) {
+  constructor(private fb: FormBuilder, private httpClient: HttpClient, private el: ElementRef) {
     this.createForm();
-  }
-
-  fileChange(event): void {
-
   }
 
   createForm() {
@@ -43,17 +39,6 @@ export class AttorneyComponent {
   }
 
   ngOnInit() {
-
-    // this.httpClient.get(environment.getStatesAPI)
-    //   .subscribe(
-    //     response => {
-    //       console.log(response);
-    //       this.selectedState = response;
-    //     },
-    //     err => {
-    //       console.log("Error Ocurred" + err);
-    //     }
-    //   )
   }
 
   typeChanged() {
@@ -86,56 +71,52 @@ export class AttorneyComponent {
       demandLetterType = target.querySelector('#lw').value;
     }
 
-    const fileList: FileList = target.querySelector('#myFile').files;
-    console.log(fileList.length);
-    if (fileList.length > 0) {
-      const file = fileList[0];
-      const formData = new FormData();
-      formData.append('file', file, file.name);
+    const inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#fileToUpload');
+    const fileCount: number = inputEl.files.length;
+    const formData = new FormData();
 
-      // let headers = new Headers();
-      // headers.append('Content-Type', 'multipart/form-data');
-      // headers.append('Accept', 'application/json');
-      // let options = new RequestOptions({ headers: headers });
+    // const myobj = {
+    //   "defendantName": defendantName, "plaintiffName": plaintiffName, "demandLetterType": demandLetterType
+    // };
 
-    }
+    //check if the filecount is greater than zero, to be sure a file was selected.
+    if (fileCount > 0) {
 
-    const myobj = {
-      "defendantName": defendantName, "plaintiffName": plaintiffName, "demandLetterType": demandLetterType
-    };
+      formData.append('file-to-upload', inputEl.files.item(0));
+      console.log(formData);
+      this.httpClient.post('http://localhost:3000/getletter', formData,  {responseType: 'text'})
+        .subscribe(
+          response => {
+            console.log(response);
+            var pdfhash = response;
+            var hashToBlock = {
+              "$class": "org.hyperledger_composer.sop.DemandLetter",
+              "plaintiff": plaintiffName,
+              "defendant": defendantName,
+              "caseType": demandLetterType,
+              "registeredAgent": "CSC",
+              "letterId": pdfhash,
+              "demandLetterAcknowledgeStatus": "false",
+              "forwardDemandLetterToDefendant": "false"
+            }
 
-    console.log(myobj);
+            console.log(hashToBlock);
 
-    // this.httpClient.post(environment.postLetter, myobj, options)
-    //   .subscribe(
-    //     response => {
-    //       console.log(response);
-    //       this.letterId = response;
-
-    var hashToBlock = {
-      "$class": "org.hyperledger_composer.sop.DemandLetter",
-      "plaintiff": plaintiffName,
-      "defendant": defendantName,
-      "caseType": demandLetterType,
-      "registeredAgent": "CSC",
-      "letterId": "3355",
-      "demandLetterAcknowledgeStatus": "false",
-      "forwardDemandLetterToDefendant": "false"
-    }
-
-    console.log(hashToBlock);
-
-    this.httpClient.post('http://52.172.13.43:8085/api/DemandLetter', hashToBlock)
-      .subscribe(
-        response => {
-          console.log(response);
-          if (confirm('Your demand letter sent to Registered Agent.')) {
-            window.location.reload();
+            this.httpClient.post('http://52.172.13.43:8085/api/DemandLetter', hashToBlock)
+              .subscribe(
+                response => {
+                  console.log(response);
+                  if (confirm('Your demand letter sent to Registered Agent.')) {
+                    window.location.reload();
+                  }
+                }
+              )
+          },
+          err => {
+            console.log("Error Ocurred" + err);
           }
-        }
-      )
-    //   }
-    // )
+        )
+    }
   }
 
   validate() {
