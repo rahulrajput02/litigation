@@ -12,19 +12,26 @@
   margin-left: auto;
 }
 
-.modelImage{
+.modelImage {
   max-width: 98%;
 }
 
+.modelImage2 {
+  max-width: 70%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 p {
-    color: #867d7d;
-    margin-top: -4%;
+  color: #867d7d;
+  margin-top: -4%;
 }
 
 .btn:not(:disabled):not(.disabled) {
-    cursor: pointer;
-    background-color: #01B8A9;
-    color: white;
+  cursor: pointer;
+  background-color: #01B8A9;
+  color: white;
 }
 
 .infoButton {
