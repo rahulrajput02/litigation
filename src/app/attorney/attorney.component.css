@@ -8,19 +8,33 @@
 }
 
 .backImage {
-  width: 2.5%;
+  width: 2.4%;
   float: right;
   margin-top: 1.5%;
   margin-right: 4%;
+}
+
+.jumbotron {
+  padding: 0.5%;
+  background-color: #04939969;
+}
+
+.menu_links {
+  cursor: pointer;
+}
+
+.showTableButton {
+  width: 2.5%;
+  float: right;
+  margin-top: 1.5%;
+  margin-right: 2%;
+  cursor: pointer;
 }
 
 .form-group {
   margin-bottom: 2rem;
 }
 
-.jumbotron {
-  padding: 2%;
-}
 
 [hidden] {
   display: none !important;
@@ -36,6 +50,10 @@
 .spinner {
   width: 8.6%;
   margin-left: 4%;
+}
+
+form {
+  margin-top: -2.7%;
 }
 
 .logo {

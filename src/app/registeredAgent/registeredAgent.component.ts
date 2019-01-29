@@ -25,8 +25,11 @@ export class RegisteredAgentComponent {
     this.httpClient.get('http://52.172.13.43:8085/api/DemandLetter?filter[where][forwardDemandLetterToDefendant]=false')
       .subscribe(
         response => {
-          console.log(response);
           this.fillingData = response;
+          for (var i = 0; i < this.fillingData.length; i++) {
+            var sortedDate = convert(this.fillingData[i].initiationTimestamp);
+            this.fillingData[i].initiationTimestamp = sortedDate;
+          }
         },
         err => {
           console.log("Error Ocurred" + err);
@@ -87,4 +90,29 @@ export class RegisteredAgentComponent {
 
           })
       }
+}
+
+function convert(time) {
+  // Unixtimestamp
+  var unixtimestamp = time;
+  // Months array
+  var months_arr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  // Convert timestamp to milliseconds
+  var date = new Date(unixtimestamp * 1000);
+  // Year
+  var year = date.getFullYear();
+  // Month
+  var month = months_arr[date.getMonth()];
+  // Day
+  var day = date.getDate();
+  // Hours
+  var hours = date.getHours();
+  // Minutes
+  var minutes = "0" + date.getMinutes();
+  // Seconds
+  var seconds = "0" + date.getSeconds();
+  // Display date time in MM-dd-yyyy h:m:s format
+  var convdataTime = month + '-' + day + '-' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+  return convdataTime;
 }

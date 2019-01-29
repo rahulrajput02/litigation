@@ -1,46 +1,38 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-studentLoginButton',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
-  angularForm = new FormGroup({
-    inputEmail: new FormControl(),
-    inputPassword: new FormControl(),
+  form = new FormGroup({
   });
 
-  constructor(private fb: FormBuilder, public router: Router) {
-    this.createForm();
+  constructor(private fb: FormBuilder) { }
+
+  openModal() {
+    this.display1 = 'block';
   }
 
-  createForm() {
-    this.angularForm = this.fb.group({
-      inputEmail: ['', Validators.required],
-      inputPassword: ['', Validators.required],
-    });
+  onCloseHandled() {
+    this.display1 = 'none';
   }
 
+  openModal2() {
+    this.display2 = 'block';
+  }
 
-  login(event) {
-    const target = event.target;
+  onCloseHandled2() {
+    this.display2 = 'none';
+  }
 
-    const inputEmail = target.querySelector('#inputEmail').value;
-    const inputPassword = target.querySelector('#inputPassword').value;
-    const selectRoles = target.querySelector('#selectRoles').value;
+  openModal3() {
+    this.display3 = 'block';
+  }
 
-    console.log(inputEmail, inputPassword, selectRoles);
-
-    if (selectRoles === 'Attorney') {
-      this.router.navigateByUrl('/attorney');
-    } else if (selectRoles === 'Registered Agent') {
-      this.router.navigateByUrl('/registeredagent');
-    } else {
-      this.router.navigateByUrl('/defendant');
-    }
+  onCloseHandled3() {
+    this.display3 = 'none';
   }
 }

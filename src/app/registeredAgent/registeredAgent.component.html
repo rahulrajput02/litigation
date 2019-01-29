@@ -10,7 +10,7 @@
     <div class="jumbotron jumbotron-fluid">
       <div class="heading">
         <h2>
-          Pending Demand Letters
+          Demand Letters
         </h2>
       </div>
     </div>
@@ -18,20 +18,24 @@
     <table id="example" class="table table-striped" style="width:100%">
       <thead>
         <tr>
-          <th>Id</th>
+        <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Id</th>
           <th>Defendant Name</th>
           <th>Plaintiff Name</th>
-          <th>Letter Type</th>
+          <th>Nature of Case</th>
+          <th>Document Type</th>
+          <th>Initiation Date</th>
           <th>View</th>
           <th>Forward</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of fillingData; index as i">
-          <td>{{i+1}}</td>
+          <td>DL_CSC_100{{i+1}}</td>
           <td>{{data.defendant}}</td>
           <td>{{data.plaintiff}}</td>
-          <td>{{data.caseType}}</td>
+          <td>{{data.natureOfCase}}</td>
+          <td>{{data.documentType}}</td>
+          <td>{{data.initiationTimestamp}}</td>
           <td>
             <a class="menu_links" (click)="pdfDownload(data.letterId)">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 27px" />

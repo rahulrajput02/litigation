@@ -1,10 +1,13 @@
 <a href="/">
   <img class="logo" alt="Logo" src="https://ocp.cscglobal.com/cdn/gateway/csc/csc-logo-marketing2.png">
 </a>
-<a href="/">
+<a href="/attorney">
   <img class="backImage" src="https://image.flaticon.com/icons/png/512/58/58452.png">
 </a>
-<form (submit)="demandLetter($event)" [formGroup]="angularForm" autocomplete="on" novalidate>
+<a (click)="showTable()">
+  <img class="showTableButton" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPr5U5CCOQxpisfq6A6WvRgtbLmWbP0UDTCkt1Jebb2E7fEkES">
+</a>
+<form [hidden]="submitClicked" (submit)="demandLetter($event)" [formGroup]="angularForm" autocomplete="on" novalidate>
   <div class="container">
     <div class="heading">
       <h1>
@@ -41,24 +44,51 @@
 
     <div class="form-group">
       <label>
-        <b>Demand Letter Type</b>
+        <b>Nature of Case</b>
       </label>
-      <div class="form-check form-check-inline" style="padding-left: 10%">
-        <input class="form-check-input" type="radio" name="letterType" id="boc" value="Breach of Contract" checked>
-        <label class="form-check-label" for="boc"> Breach of Contract </label>
-      </div>
-      <div class="form-check form-check-inline" style="padding-left: 5%">
-        <input class="form-check-input" type="radio" name="letterType" id="lw" value="Legal Wrong">
-        <label class="form-check-label" for="lw"> Legal Wrong </label>
-      </div>
+      <select class="form-control" formControlName="natureOfCase" id="natureOfCase">
+        <option value="">---Select Case---</option>
+        <option value="Asbestos">Asbestos</option>
+        <option value="Breach of Warranty">Breach of Warranty</option>
+        <option value="Contract">Contract</option>
+        <option value="Foreclosure">Foreclosure</option>
+        <option value="Personal Injury">Personal Injury</option>
+        <option value="Property">Property</option>
+        <option value="Brief">Brief</option>
+        <option value="Wrongful Death">Wrongful Death</option>
+        <option value="Wrongful Termination">Wrongful Termination</option>
+      </select>
     </div>
 
     <div class="form-group">
       <label>
-        <b>Upload Demand Letter</b>
-      </label><br><br>
+        <b>Document Type</b>
+      </label>
+      <select class="form-control" formControlName="documentType" id="documentType">
+        <option value="">---Select Document---</option>
+        <option value="Affidavit">Affidavit</option>
+        <option value="Amended Complain">Amended Complain</option>
+        <option value="Amended Counterclaim">Amended Counterclaim</option>
+        <option value="Appearance">Appearance</option>
+        <option value="Assignment">Assignment</option>
+        <option value="Bankruptcy Pleading">Bankruptcy Pleading</option>
+        <option value="Brief">Brief</option>
+        <option value="Child Support Document">Child Support Document</option>
+        <option value="Citation">Citation</option>
+        <option value="Claim">Claim</option>
+        <option value="Complaint">Complaint</option>
+        <option value="Counterclaim">Counterclaim</option>
+        <option value="Declaration">Declaration</option>
+        <option value="Demand Letter">Demand Letter</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <b>Upload Demand Letter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+      </label>
       <input type="file" id="fileToUpload" name="letter" accept=".pdf">
-    </div><br>
+    </div>
 
 
     <button routerLink="" type="button" style="margin-right: 8%" class="btn btn-secondary">
@@ -69,6 +99,46 @@
       class="btn btn-success">
       Submit
     </button>
-    <br />
   </div>
 </form>
+
+<div *ngIf="submitClicked" class="container2">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="heading">
+      <h2>
+        Demand Letters
+      </h2>
+    </div>
+  </div>
+  <br>
+  <table id="example" class="table table-striped" style="width:100%">
+    <thead>
+      <tr>
+        <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Id</th>
+        <th>Defendant Name</th>
+        <th>Plaintiff Name</th>
+        <th>Nature of Case</th>
+        <th>Document Type</th>
+        <th>Initiation Date</th>
+        <th>Days Elapsed</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of fillingData; index as i">
+        <td>DL_CSC_100{{i+1}}</td>
+        <td>{{data.defendant}}</td>
+        <td>{{data.plaintiff}}</td>
+        <td>{{data.natureOfCase}}</td>
+        <td>{{data.documentType}}</td>
+        <td>{{data.initiationTimestamp}}</td>
+          <td>{{daysLeft[i]}}</td>
+        <td>
+          <a class="menu_links" (click)="pdfDownload(data.letterId)">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 27px" />
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

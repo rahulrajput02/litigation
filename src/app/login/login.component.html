@@ -1,38 +1,127 @@
-<!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
+<a href="">
+  <img class="logo" src="https://ocp.cscglobal.com/cdn/gateway/csc/csc-logo-marketing2.png">
+</a>
 
-<body>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-          <div class="card card-signin my-5">
-            <div class="card-body">
-              <h5 class="card-title text-center">Sign In</h5>
-              <form (submit)="login($event)" [formGroup]="angularForm" autocomplete="on" novalidate>
-                <div>
-                  <label for="inputEmail">Email address</label>
-                  <input type="email" id="inputEmail" formControlName="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                </div><br>
+<a (click)="openModal()">
+  <img class="infoButton" src="https://image.flaticon.com/icons/svg/32/32175.svg">
+</a>
+<a (click)="openModal2()">
+  <img class="infoButton2" src="assets/archModel.png">
+</a>
+<a (click)="openModal3()">
+  <img class="infoButton3" src="https://cdn3.iconfinder.com/data/icons/innovation-technology/68/15-512.png">
+</a><br>
 
-                <div>
-                  <label for="inputPassword">Password</label>
-                  <input type="password" id="inputPassword" formControlName="inputPassword" class="form-control" placeholder="Password" required>
-                </div><br>
+<div class="container">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="heading2">
+      <h3>
+        Litigation Management System
+      </h3>
+    </div>
+  </div>
+</div>
+<a routerLink="/attorney">
+  <img class="logo2" src="assets/attorney.png">
+</a>
+<a routerLink="/registeredagent">
+  <img class="logo3" src="assets/agent.png">
+</a>
+<a routerLink="/defendant">
+  <img class="logo4" src="assets/defendant.png">
+</a>
 
-                <div class="form-group">
-                  <label> Role </label>
-                  <select class="form-control" id="selectRoles">
-                    <option>Attorney</option>
-                    <option>Registered Agent</option>
-                    <option>Defendant</option>
-                  </select>
-                </div><br><br>
+<!-- ******************************** Modal 1 *********************************************** !-->
 
-                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-                <hr class="my-4">
-              </form>
-            </div>
-          </div>
+<div id="myModal1" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display1}">
+  <div class="backdrop">
+    <div class="modal-dialog" role="document">
+
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Flow of Demand Letter</h4>
+          <button type="button" class="close" aria-label="Close" (click)='onCloseHandled()'><span aria-hidden="true">&times;</span></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <ol>
+            <li>Plaintiff's attorney fills the required information about defendant and attach demand letter and submmit.</li>
+            <li>The data is stored on blockchian and demand letter copy is stored in IPFS.</li>
+            <li>The data and demand letter sent to registered agent i.e CSC so that they can transfer it to Defendant.</li>
+            <li>Demand letter is sent to defendant to Acknowledge.</li>
+          </ol>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="onCloseHandled()">Close</button>
         </div>
       </div>
-    </div>
-</body>
+    </div><!-- /.modal-dialog -->
+  </div>
+</div><!-- /.modal !-->
+
+<!-- ******************************** Modal 2 *********************************************** !-->
+
+<div id="myModal1" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display2}">
+  <div class="backdrop">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Architecture Overview</h4>
+          <button type="button" class="close" aria-label="Close" (click)='onCloseHandled2()'><span aria-hidden="true">&times;</span></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <img class="modelImage" src="assets/arch1.png" />
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="onCloseHandled2()">Close</button>
+        </div>
+      </div>
+    </div><!-- /.modal-dialog -->
+  </div>
+</div><!-- /.modal !-->
+
+<!-- ******************************** Modal 3 *********************************************** !-->
+
+<div id="myModal1" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display3}">
+  <div class="backdrop">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Technology Stack</h4>
+          <button type="button" class="close" aria-label="Close" (click)='onCloseHandled3()'><span aria-hidden="true">&times;</span></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <ul>
+            <li><b>Blockchain Platform: </b>Hyperledger Fabric</li>
+            <li><b>Smart Contract: </b>Composer Modeling Language(CTO)</li>
+            <li><b>Contract Deployment: </b>Hyperledger tools</li>
+            <li><b>Code Generator: </b>Yeoman</li>
+            <li><b>Frontend: </b>Anguar 6</li>
+            <li><b>Backend: </b>Node JS</li>
+            <li><b>Containerization: </b>Docker</li>
+            <li><b>Storage: </b>IPFS</li>
+          </ul>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="onCloseHandled3()">Close</button>
+        </div>
+      </div>
+    </div><!-- /.modal-dialog -->
+  </div>
+</div><!-- /.modal !-->

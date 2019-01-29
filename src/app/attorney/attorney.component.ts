@@ -13,18 +13,16 @@ export class AttorneyComponent {
   secondFormVisible = false;
   firstFormVisible = true;
   letterId;
-  securedPartyOption;
-  juisdictions;
-  selectedState;
-  collateralOption;
-  savedSuccess = false;
-  saveState = true;
-  validateBlock;
-  buttonClicked = false;
+  submitClicked = false;
+  currentTime;
+  daysLeft = [];
+
 
   angularForm = new FormGroup({
     defendantName: new FormControl(),
-    plaintiffName: new FormControl()
+    plaintiffName: new FormControl(),
+    natureOfCase: new FormControl(),
+    documentType: new FormControl(),
   });
 
   constructor(private fb: FormBuilder, private httpClient: HttpClient, private el: ElementRef) {
@@ -34,7 +32,9 @@ export class AttorneyComponent {
   createForm() {
     this.angularForm = this.fb.group({
       defendantName: ['', Validators.required],
-      plaintiffName: ['', Validators.required]
+      plaintiffName: ['', Validators.required],
+      natureOfCase: ['', Validators.required],
+      documentType: ['', Validators.required],
     });
   }
 
@@ -63,13 +63,10 @@ export class AttorneyComponent {
     const defendantName = target.querySelector('#defendantName').value;
     const plaintiffName = target.querySelector('#plaintiffName').value;
 
-    var demandLetterType;
+    const natureOfCase = target.querySelector('#natureOfCase').value;
+    const documentType = target.querySelector('#documentType').value;
 
-    if (target.querySelector('#boc').checked) {
-      demandLetterType = target.querySelector('#boc').value;
-    } else {
-      demandLetterType = target.querySelector('#lw').value;
-    }
+    console.log(natureOfCase, documentType);
 
     const inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#fileToUpload');
     const fileCount: number = inputEl.files.length;
@@ -93,11 +90,13 @@ export class AttorneyComponent {
               "$class": "org.hyperledger_composer.sop.DemandLetter",
               "plaintiff": plaintiffName,
               "defendant": defendantName,
-              "caseType": demandLetterType,
+              "documentType": documentType,
+              "natureOfCase": natureOfCase
               "registeredAgent": "CSC",
               "letterId": pdfhash,
               "demandLetterAcknowledgeStatus": "false",
-              "forwardDemandLetterToDefendant": "false"
+              "forwardDemandLetterToDefendant": "false",
+              "initiationTimestamp": Math.round(((new Date().getTime())/1000));
             }
 
             console.log(hashToBlock);
@@ -107,7 +106,7 @@ export class AttorneyComponent {
                 response => {
                   console.log(response);
                   if (confirm('Your demand letter sent to Registered Agent.')) {
-                    window.location.reload();
+                    this.showTable();
                   }
                 },
                 err => {
@@ -120,8 +119,74 @@ export class AttorneyComponent {
     }
   }
 
+  showTable() {
+    return this.httpClient.get('http://52.172.13.43:8085/api/DemandLetter?filter[where][forwardDemandLetterToDefendant]=false')
+      .subscribe(
+        response => {
+          console.log(response);
+          this.submitClicked = true;
+
+          this.fillingData = response;
+          for (var i = 0; i < this.fillingData.length; i++) {
+            this.daysLeft[i] = daysLeft(this.fillingData[i].initiationTimestamp);
+            var sortedDate = convert(this.fillingData[i].initiationTimestamp);
+            this.fillingData[i].initiationTimestamp = sortedDate;
+          }
+        },
+        err => {
+          console.log("Error Ocurred" + err);
+        }
+      )
+  }
+
+  pdfDownload(id) {
+    this.httpClient.get('http://localhost:3000/getfile/' + id, { responseType: 'arraybuffer' })
+      .subscribe(response => {
+        console.log(response);
+        var blob = new Blob([response], { type: 'application/pdf' });
+        this.fileUrl = window.URL.createObjectURL(blob);
+
+        //Open PDF in new tab
+        window.open(this.fileUrl);
+
+      })
+  }
+
   validate() {
     var validateObj = { "Transaction ID": this.validateBlock["transactionId"], "Timestamp": this.validateBlock["timestamp"] }
     console.log(validateObj);
   }
+
+}
+
+function convert(time) {
+  // Unixtimestamp
+  var unixtimestamp = time;
+  // Months array
+  var months_arr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  // Convert timestamp to milliseconds
+  var date = new Date(unixtimestamp * 1000);
+  // Year
+  var year = date.getFullYear();
+  // Month
+  var month = months_arr[date.getMonth()];
+  // Day
+  var day = date.getDate();
+  // Hours
+  var hours = date.getHours();
+  // Minutes
+  var minutes = "0" + date.getMinutes();
+  // Seconds
+  var seconds = "0" + date.getSeconds();
+  // Display date time in MM-dd-yyyy h:m:s format
+  var convdataTime = month + '-' + day + '-' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+  return convdataTime;
+}
+
+function daysLeft(timestamp2) {
+    var difference = ((new Date().getTime())/1000) - timestamp2;
+    var daysDifference = Math.floor(difference/1000/60/60/24);
+
+    return daysDifference;
 }

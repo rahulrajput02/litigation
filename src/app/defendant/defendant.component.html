@@ -18,18 +18,24 @@
     <table id="example" class="table table-striped" style="width:100%">
       <thead>
         <tr>
-          <th>Id</th>
+          <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Id</th>
+          <th>Defendant Name</th>
           <th>Plaintiff Name</th>
-          <th>Letter Type</th>
-          <th>Acknowledge</th>
+          <th>Nature of Case</th>
+          <th>Document Type</th>
+          <th>Initiation Date</th>
           <th>View</th>
+          <th>Forward</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of fillingData; index as i">
-          <td>{{i+1}}</td>
+        <td>DL_CSC_100{{i+1}}</td>
+          <td>{{data.defendant}}</td>
           <td>{{data.plaintiff}}</td>
-          <td>{{data.caseType}}</td>
+          <td>{{data.natureOfCase}}</td>
+          <td>{{data.documentType}}</td>
+          <td>{{data.initiationTimestamp}}</td>
           <td>
             <a class="menu_links" (click)="acknowledge(i)" *ngIf="data.demandLetterAcknowledgeStatus == 'false'">
               <img src="assets/img_167389.png" style="width: 26px; margin-left:2vw" />
@@ -42,7 +48,7 @@
             <a class="menu_links" (click)="pdfDownload(data.letterId)" *ngIf="data.demandLetterAcknowledgeStatus == 'true'">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 30px" />
             </a>
-            <a class="menu_links" *ngIf="data.demandLetterAcknowledgeStatus == 'false'" >
+            <a class="menu_links" *ngIf="data.demandLetterAcknowledgeStatus == 'false'">
               <img title="Please acknowledge first" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 30px; cursor: no-drop" />
             </a>
           </td>
