@@ -102,6 +102,7 @@
   </div>
 </form>
 
+
 <div *ngIf="submitClicked" class="container2">
   <div class="jumbotron jumbotron-fluid">
     <div class="heading">
@@ -132,7 +133,7 @@
         <td>{{data.natureOfCase}}</td>
         <td>{{data.documentType}}</td>
         <td>{{data.initiationTimestamp}}</td>
-          <td>{{daysLeft[i]}}</td>
+        <td>{{daysLeft[i]}}</td>
         <td>
           <a class="menu_links" (click)="pdfDownload(data.letterId)">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 27px" />

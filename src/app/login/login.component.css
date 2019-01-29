@@ -16,6 +16,11 @@
   max-width: 98%;
 }
 
+p {
+    color: #867d7d;
+    margin-top: -4%;
+}
+
 .btn:not(:disabled):not(.disabled) {
     cursor: pointer;
     background-color: #01B8A9;

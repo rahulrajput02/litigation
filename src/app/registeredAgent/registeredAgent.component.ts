@@ -15,6 +15,7 @@ export class RegisteredAgentComponent {
   fillingData;
   transactionData;
   fileUrl;
+  daysLeft = [];
 
 
   constructor(private httpClient: HttpClient, private routes: Router) { }
@@ -27,6 +28,7 @@ export class RegisteredAgentComponent {
         response => {
           this.fillingData = response;
           for (var i = 0; i < this.fillingData.length; i++) {
+            this.daysLeft[i] = daysLeft(this.fillingData[i].initiationTimestamp);
             var sortedDate = convert(this.fillingData[i].initiationTimestamp);
             this.fillingData[i].initiationTimestamp = sortedDate;
           }
@@ -79,17 +81,17 @@ export class RegisteredAgentComponent {
   }
 
   pdfDownload(id) {
-        this.httpClient.get('http://localhost:3000/getfile/' + id, { responseType: 'arraybuffer' })
-          .subscribe(response => {
-            console.log(response);
-            var blob = new Blob([response], { type: 'application/pdf' });
-            this.fileUrl = window.URL.createObjectURL(blob);
+    this.httpClient.get('http://localhost:3000/getfile/' + id, { responseType: 'arraybuffer' })
+      .subscribe(response => {
+        console.log(response);
+        var blob = new Blob([response], { type: 'application/pdf' });
+        this.fileUrl = window.URL.createObjectURL(blob);
 
-            //Open PDF in new tab
-            window.open(this.fileUrl);
+        //Open PDF in new tab
+        window.open(this.fileUrl);
 
-          })
-      }
+      })
+  }
 }
 
 function convert(time) {
@@ -115,4 +117,11 @@ function convert(time) {
   var convdataTime = month + '-' + day + '-' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
   return convdataTime;
+}
+
+function daysLeft(timestamp2)  {
+      var  difference  = ((new Date().getTime()) / 1000) -  timestamp2;
+      var  daysDifference  =  Math.floor(difference / 1000 / 60 / 60 / 24);
+
+      return  daysDifference;
 }
