@@ -91,7 +91,7 @@ export class AttorneyComponent {
               "plaintiff": plaintiffName,
               "defendant": defendantName,
               "documentType": documentType,
-              "natureOfCase": natureOfCase
+              "natureOfCase": natureOfCase,
               "registeredAgent": "CSC",
               "letterId": pdfhash,
               "demandLetterAcknowledgeStatus": "false",
