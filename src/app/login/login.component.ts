@@ -7,6 +7,9 @@ import { FormControl, FormGroup, FormBuilder, Validators, NgForm } from '@angula
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  display1;
+  display2;
+  display3;
   form = new FormGroup({
   });
 

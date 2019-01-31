@@ -15,6 +15,8 @@ export class AttorneyComponent {
   letterId;
   submitClicked = false;
   currentTime;
+  fileUrl;
+  fillingData;
   daysLeft = [];
 
 
@@ -41,22 +43,6 @@ export class AttorneyComponent {
   ngOnInit() {
   }
 
-  typeChanged() {
-    const selectedState = this.angularForm.get('selectedState').value;
-    const data = { "state": selectedState };
-    this.httpClient.post(environment.getJurisdictionAPI, data)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.juisdictions = response;
-        },
-        err => {
-          console.log("Error Ocurred" + err);
-        }
-      )
-  }
-
-
   demandLetter(event) {
     const target = event.target;
 
@@ -81,7 +67,7 @@ export class AttorneyComponent {
 
       formData.append('file-to-upload', inputEl.files.item(0));
       console.log(formData);
-      this.httpClient.post('http://localhost:3000/getletter', formData, { responseType: 'text' })
+      this.httpClient.post(environment.getLetter, formData, { responseType: 'text' })
         .subscribe(
           response => {
             console.log(response);
@@ -96,7 +82,7 @@ export class AttorneyComponent {
               "letterId": pdfhash,
               "demandLetterAcknowledgeStatus": "false",
               "forwardDemandLetterToDefendant": "false",
-              "initiationTimestamp": Math.round(((new Date().getTime())/1000));
+              "initiationTimestamp": Math.round(((new Date().getTime())/1000))
             }
 
             console.log(hashToBlock);
@@ -140,7 +126,7 @@ export class AttorneyComponent {
   }
 
   pdfDownload(id) {
-    this.httpClient.get('http://localhost:3000/getfile/' + id, { responseType: 'arraybuffer' })
+    this.httpClient.get(environment.getFile + id, { responseType: 'arraybuffer' })
       .subscribe(response => {
         console.log(response);
         var blob = new Blob([response], { type: 'application/pdf' });
@@ -150,11 +136,6 @@ export class AttorneyComponent {
         window.open(this.fileUrl);
 
       })
-  }
-
-  validate() {
-    var validateObj = { "Transaction ID": this.validateBlock["transactionId"], "Timestamp": this.validateBlock["timestamp"] }
-    console.log(validateObj);
   }
 
 }

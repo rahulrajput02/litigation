@@ -17,7 +17,9 @@ export const environment = {
   getDataFromDB : 'http://52.172.13.43:6001/showFilling',
   getTransactionDetails : 'http://52.172.13.43:6003/api/org.example.mynetwork.StoreHash/',
   postPdf : 'http://52.172.13.43:6001/getpdf',
-  getPdf : 'http://52.172.13.43:6001/getpdf'
+  getPdf : 'http://52.172.13.43:6001/getpdf',
+  getFile: 'http://localhost:3000/getfile/',
+  getLetter: 'http://localhost:3000/getletter'
 };
 
 /*

@@ -61,7 +61,7 @@ export class DefendantComponent {
   }
 
   pdfDownload(id) {
-    this.httpClient.get('http://localhost:3000/getfile/' + id, { responseType: 'arraybuffer' })
+    this.httpClient.get(environment.getFile + id, { responseType: 'arraybuffer' })
       .subscribe(response => {
         console.log(response);
         var blob = new Blob([response], { type: 'application/pdf' });
