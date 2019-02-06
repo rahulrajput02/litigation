@@ -12,10 +12,62 @@
     <div class="heading">
       <h1>
         Send Demand Letter
-      </h1>
+      </h1><br>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <label>
+            <b>Registered Agent</b>
+          </label>
+          <select class="form-control" formControlName="registeredAgentName" id="registeredAgentName" (change)="typeChanged()">
+            <option value="">---Select Agent---</option>
+            <option value = {{name.registeredAgentID}} *ngFor="let name of registeredAgentName; index as i">
+              {{name.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <label>
+            <b>Defendant's Name</b>
+          </label>
+          <select formControlName="defendantName" class="form-control" id="defendantName">
+            <option *ngFor="let name of defendantName">
+              {{name}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="form-group">
+      <label>
+        <br>
+        <b>Registered Agent</b>
+      </label>
+      <select class="form-control" formControlName="registeredAgentName" id="registeredAgentName" (change)="typeChanged()">
+        <option>---Select Agent---</option>
+        <option *ngFor="let name of registeredAgentName; index as i">
+          {{name.name}}
+        </option>
+      </select>
     </div>
 
     <div class="form-group">
+      <label>
+        <b>Defendant's Name </b>
+      </label>
+      <select formControlName="defendantName" class="form-control" id="defendantName">
+        <option *ngFor="let name of defendantName">
+          {{name.name}}
+        </option>
+      </select>
+    </div> -->
+
+    <!-- <div class="form-group">
       <br>
       <label>
         <b>Defendant's Name</b>
@@ -27,7 +79,7 @@
       <div *ngIf="angularForm.controls['defendantName'].errors.required">
         Defendant's Name is required.
       </div>
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label>

@@ -11,16 +11,20 @@ import { environment } from '../../environments/environment';
 export class AttorneyComponent {
   title = 'createFilling';
   secondFormVisible = false;
+  registeredAgentName;
+  defendantName = [];
   firstFormVisible = true;
   letterId;
   submitClicked = false;
   currentTime;
   fileUrl;
+  responseOwner;
   fillingData;
   daysLeft = [];
 
 
   angularForm = new FormGroup({
+    registeredAgentName: new FormControl(),
     defendantName: new FormControl(),
     plaintiffName: new FormControl(),
     natureOfCase: new FormControl(),
@@ -33,6 +37,7 @@ export class AttorneyComponent {
 
   createForm() {
     this.angularForm = this.fb.group({
+      registeredAgentName: ['', Validators.required],
       defendantName: ['', Validators.required],
       plaintiffName: ['', Validators.required],
       natureOfCase: ['', Validators.required],
@@ -41,6 +46,39 @@ export class AttorneyComponent {
   }
 
   ngOnInit() {
+    this.httpClient.get('http://52.172.13.43:7085/api/RegisteredAgent')
+      .subscribe(
+        response => {
+          console.log(response);
+          this.registeredAgentName = response;
+        },
+        err => {
+          console.log("Error Ocurred" + err);
+        }
+      )
+  }
+
+  typeChanged() {
+    const selectedRA = this.angularForm.get('registeredAgentName').value;
+    console.log(selectedRA);
+    this.httpClient.get('http://52.172.13.43:7085/api/queries/QBusinessEntityByRegisteredAgent?registeredAgentID=resource%3Aorg.hyperledger_composer.sop.RegisteredAgent%23' + selectedRA)
+      .subscribe(
+        response => {
+          // console.log(response.length);
+          this.defendantName = [];
+          this.responseOwner = response;
+          for(var i =0; i < this.responseOwner.length; i++){
+            var arrayData = ((this.responseOwner[i].owner).split('#'));
+            console.log(arrayData);
+            this.defendantName.push((arrayData[1] + '-' + this.responseOwner[i].businessID));
+          }
+
+          // this.defendantName = response;
+        },
+        err => {
+          console.log("Error Ocurred" + err);
+        }
+      )
   }
 
   demandLetter(event) {
@@ -82,7 +120,7 @@ export class AttorneyComponent {
               "letterId": pdfhash,
               "demandLetterAcknowledgeStatus": "false",
               "forwardDemandLetterToDefendant": "false",
-              "initiationTimestamp": Math.round(((new Date().getTime())/1000))
+              "initiationTimestamp": Math.round(((new Date().getTime()) / 1000))
             }
 
             console.log(hashToBlock);
@@ -165,9 +203,9 @@ function convert(time) {
   return convdataTime;
 }
 
-function daysLeft(timestamp2) {
-    var difference = ((new Date().getTime())/1000) - timestamp2;
-    var daysDifference = Math.floor(difference/1000/60/60/24);
+function daysLeft(timestamp2) {
+  var difference = ((new Date().getTime()) / 1000) - timestamp2;
+  var daysDifference = Math.floor(difference / 1000 / 60 / 60 / 24);
 
-    return daysDifference;
+  return daysDifference;
 }

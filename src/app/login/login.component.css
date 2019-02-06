@@ -58,6 +58,13 @@ p {
   cursor: pointer;
 }
 
+.infoButton4 {
+  width: 7.5%;
+  float: right;
+  margin-top: 0.5%;
+  cursor: pointer;
+}
+
 .heading {
   text-align: center;
   color: white;

@@ -10,6 +10,9 @@
 </a>
 <a (click)="openModal3()">
   <img class="infoButton3" src="https://cdn3.iconfinder.com/data/icons/innovation-technology/68/15-512.png">
+</a>
+<a (click)="openModal4()">
+  <img class="infoButton4" src="https://svgsilh.com/svg/1627729.svg">
 </a><br>
 
 <div class="container">
@@ -31,11 +34,11 @@
   <img class="logo4" src="assets/defendant.png">
 </a>
 <div class="container">
-<p><i><b>Disclaimer:&nbsp;</b>The application assumes that all users will be pre-registered on the systm and will be having a valid set of credentials to login.
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Attorney Registeration:&nbsp;</b>Attorneys will be registere by Federal Law Board.
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Registered Agents:&nbsp;</b>All Registered Agents will be registered by state of Delware.
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Defendants:&nbsp;</b>All Defendants willl be registered by their respective Registered Agent.
-<br><br>All legal documents movement and acknowledgement across parties will happen only on digital platform!</i></p>
+  <p><i><b>Disclaimer:&nbsp;</b>The application assumes that all users will be pre-registered on the systm and will be having a valid set of credentials to login.
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Attorney Registeration:&nbsp;</b>Attorneys will be registere by Federal Law Board.
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Registered Agents:&nbsp;</b>All Registered Agents will be registered by state of Delware.
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Defendants:&nbsp;</b>All Defendants willl be registered by their respective Registered Agent.
+      <br><br>All legal documents movement and acknowledgement across parties will happen only on digital platform!</i></p>
 </div>
 
 <!-- ******************************** Modal 1 *********************************************** !-->
@@ -122,6 +125,29 @@
         <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-default" (click)="onCloseHandled3()">Close</button>
+        </div>
+      </div>
+    </div><!-- /.modal-dialog -->
+  </div>
+</div><!-- /.modal !-->
+
+<!-- ******************************** Modal 4 *********************************************** !-->
+
+<div id="myModal4" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display4}">
+  <div class="backdrop">
+    <div class="modal-dialog" role="document">
+
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Register Demo User</h4>
+          <button type="button" class="close" aria-label="Close" (click)='onCloseHandled4()'><span aria-hidden="true">&times;</span></button>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="onYesHandled4()">Yes</button>
+          <button type="button" class="btn btn-default" (click)="onCloseHandled4()">Cancel</button>
         </div>
       </div>
     </div><!-- /.modal-dialog -->
