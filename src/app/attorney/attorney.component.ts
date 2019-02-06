@@ -18,6 +18,7 @@ export class AttorneyComponent {
   submitClicked = false;
   currentTime;
   fileUrl;
+  plaintiffName;
   responseOwner;
   fillingData;
   daysLeft = [];
@@ -56,6 +57,17 @@ export class AttorneyComponent {
           console.log("Error Ocurred" + err);
         }
       )
+
+      this.httpClient.get('http://52.172.13.43:7085/api/Person')
+        .subscribe(
+          response => {
+            console.log(response);
+            this.plaintiffName = response;
+          },
+          err => {
+            console.log("Error Ocurred" + err);
+          }
+        )
   }
 
   typeChanged() {
@@ -67,7 +79,7 @@ export class AttorneyComponent {
           // console.log(response.length);
           this.defendantName = [];
           this.responseOwner = response;
-          for(var i =0; i < this.responseOwner.length; i++){
+          for (var i = 0; i < this.responseOwner.length; i++) {
             var arrayData = ((this.responseOwner[i].owner).split('#'));
             console.log(arrayData);
             this.defendantName.push((arrayData[1] + '-' + this.responseOwner[i].businessID));
@@ -84,13 +96,14 @@ export class AttorneyComponent {
   demandLetter(event) {
     const target = event.target;
 
+    const registeredAgentName = target.querySelector('#registeredAgentName').value;
     const defendantName = target.querySelector('#defendantName').value;
     const plaintiffName = target.querySelector('#plaintiffName').value;
 
     const natureOfCase = target.querySelector('#natureOfCase').value;
     const documentType = target.querySelector('#documentType').value;
 
-    console.log(natureOfCase, documentType);
+    console.log(defendantName, registeredAgentName, plaintiffName);
 
     const inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#fileToUpload');
     const fileCount: number = inputEl.files.length;
@@ -113,11 +126,11 @@ export class AttorneyComponent {
             var hashToBlock = {
               "$class": "org.hyperledger_composer.sop.DemandLetter",
               "plaintiff": plaintiffName,
-              "defendant": defendantName,
+              "defendant": "resource:org.hyperledger_composer.sop.BusinessEntity#" + defendantName,
               "documentType": documentType,
               "natureOfCase": natureOfCase,
-              "registeredAgent": "CSC",
               "letterId": pdfhash,
+              "registeredAgent": "resource:org.hyperledger_composer.sop.RegisteredAgent#" + registeredAgentName,
               "demandLetterAcknowledgeStatus": "false",
               "forwardDemandLetterToDefendant": "false",
               "initiationTimestamp": Math.round(((new Date().getTime()) / 1000))
@@ -125,7 +138,7 @@ export class AttorneyComponent {
 
             console.log(hashToBlock);
 
-            this.httpClient.post('http://52.172.13.43:8085/api/DemandLetter', hashToBlock)
+            this.httpClient.post('http://52.172.13.43:7085/api/DemandLetter', hashToBlock)
               .subscribe(
                 response => {
                   console.log(response);
@@ -144,17 +157,27 @@ export class AttorneyComponent {
   }
 
   showTable() {
-    return this.httpClient.get('http://52.172.13.43:8085/api/DemandLetter?filter[where][forwardDemandLetterToDefendant]=false')
+    return this.httpClient.get('http://52.172.13.43:7085/api/DemandLetter?filter[where][forwardDemandLetterToDefendant]=false')
       .subscribe(
         response => {
           console.log(response);
           this.submitClicked = true;
-
           this.fillingData = response;
+
           for (var i = 0; i < this.fillingData.length; i++) {
+            var plaintiffSplit = ((this.fillingData[i].plaintiff).split('#'));
+            this.plaintiffSplit = ((plaintiffSplit[1]));
+
+            var defendantSplit = ((this.fillingData[i].defendant).split('#'));
+            this.defendantSplit = ((defendantSplit[1]));
+
+            console.log(this.plaintiffSplit, this.defendantSplit);
+
             this.daysLeft[i] = daysLeft(this.fillingData[i].initiationTimestamp);
             var sortedDate = convert(this.fillingData[i].initiationTimestamp);
             this.fillingData[i].initiationTimestamp = sortedDate;
+            this.fillingData[i].defendant = this.defendantSplit;
+            this.fillingData[i].plaintiff = this.plaintiffSplit;
           }
         },
         err => {

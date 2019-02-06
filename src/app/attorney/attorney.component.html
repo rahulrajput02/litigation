@@ -11,7 +11,7 @@
   <div class="container">
     <div class="heading">
       <h1>
-        Send Demand Letter
+        Attorney Dashboard
       </h1><br>
     </div>
 
@@ -23,7 +23,7 @@
           </label>
           <select class="form-control" formControlName="registeredAgentName" id="registeredAgentName" (change)="typeChanged()">
             <option value="">---Select Agent---</option>
-            <option value = {{name.registeredAgentID}} *ngFor="let name of registeredAgentName; index as i">
+            <option value={{name.registeredAgentID}} *ngFor="let name of registeredAgentName; index as i">
               {{name.name}}
             </option>
           </select>
@@ -43,49 +43,16 @@
       </div>
     </div>
 
-    <!-- <div class="form-group">
-      <label>
-        <br>
-        <b>Registered Agent</b>
-      </label>
-      <select class="form-control" formControlName="registeredAgentName" id="registeredAgentName" (change)="typeChanged()">
-        <option>---Select Agent---</option>
-        <option *ngFor="let name of registeredAgentName; index as i">
-          {{name.name}}
-        </option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <b>Defendant's Name </b>
-      </label>
-      <select formControlName="defendantName" class="form-control" id="defendantName">
-        <option *ngFor="let name of defendantName">
-          {{name.name}}
-        </option>
-      </select>
-    </div> -->
-
-    <!-- <div class="form-group">
-      <br>
-      <label>
-        <b>Defendant's Name</b>
-      </label>
-      <input class="form-control" formControlName="defendantName" type="text" id="defendantName">
-    </div>
-
-    <div *ngIf="angularForm.controls['defendantName'].invalid && (angularForm.controls['defendantName'].dirty || angularForm.controls['defendantName'].touched)" class="alert alert-danger">
-      <div *ngIf="angularForm.controls['defendantName'].errors.required">
-        Defendant's Name is required.
-      </div>
-    </div> -->
-
     <div class="form-group">
       <label>
         <b>Plaintiff's Name</b>
       </label>
-      <input class="form-control" formControlName="plaintiffName" type="text" id="plaintiffName">
+      <select formControlName="plaintiffName" class="form-control" id="plaintiffName">
+        <option value="">---Select Agent---</option>
+        <option value={{name.emailId}} *ngFor="let name of plaintiffName">
+          {{name.username}}
+        </option>
+      </select>
     </div>
 
     <div *ngIf="angularForm.controls['plaintiffName'].invalid && (angularForm.controls['plaintiffName'].dirty || angularForm.controls['plaintiffName'].touched)" class="alert alert-danger">
@@ -147,8 +114,7 @@
       Cancel
     </button>
 
-    <button type="submit" class="btn btn-success" [disabled]="angularForm.controls['natureOfCase'].pristine || angularForm.controls['documentType'].pristine || angularForm.controls['defendantName'].pristine || angularForm.controls['defendantName'].invalid || angularForm.controls['plaintiffName'].pristine || angularForm.controls['plaintiffName'].invalid"
-      class="btn btn-success">
+    <button type="submit" class="btn btn-success" [disabled]="angularForm.controls['natureOfCase'].pristine || angularForm.controls['documentType'].pristine || angularForm.controls['plaintiffName'].pristine || angularForm.controls['plaintiffName'].invalid">
       Submit
     </button>
   </div>

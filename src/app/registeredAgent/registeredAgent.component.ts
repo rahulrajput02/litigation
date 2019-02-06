@@ -23,14 +23,25 @@ export class RegisteredAgentComponent {
 
   ngOnInit() {
     this.validate = false;
-    this.httpClient.get('http://52.172.13.43:8085/api/DemandLetter?filter[where][forwardDemandLetterToDefendant]=false')
+    // this.httpClient.get('http://52.172.13.43:7085/api/DemandLetter?filter[where][forwardDemandLetterToDefendant]=false')
+    this.httpClient.get('http://52.172.13.43:7085/api/queries/QDemandLetterByRegisteredAgent?registeredAgent=resource%3Aorg.hyperledger_composer.sop.RegisteredAgent%23RA1010')
       .subscribe(
         response => {
           this.fillingData = response;
           for (var i = 0; i < this.fillingData.length; i++) {
+            var plaintiffSplit = ((this.fillingData[i].plaintiff).split('#'));
+            this.plaintiffSplit = ((plaintiffSplit[1]));
+
+            var defendantSplit = ((this.fillingData[i].defendant).split('#'));
+            this.defendantSplit = ((defendantSplit[1]));
+
+            console.log(this.plaintiffSplit, this.defendantSplit);
+
             this.daysLeft[i] = daysLeft(this.fillingData[i].initiationTimestamp);
             var sortedDate = convert(this.fillingData[i].initiationTimestamp);
             this.fillingData[i].initiationTimestamp = sortedDate;
+            this.fillingData[i].defendant = this.defendantSplit;
+            this.fillingData[i].plaintiff = this.plaintiffSplit;
           }
         },
         err => {
@@ -66,7 +77,7 @@ export class RegisteredAgentComponent {
 
     console.log(postObj);
 
-    this.httpClient.post('http://52.172.13.43:8085/api/SendDemandLetterToDefendant', postObj)
+    this.httpClient.post('http://52.172.13.43:7085/api/SendDemandLetterToDefendant', postObj)
       .subscribe(
         response => {
           console.log(response);
@@ -119,9 +130,9 @@ function convert(time) {
   return convdataTime;
 }
 
-function daysLeft(timestamp2)  {
-      var  difference  = ((new Date().getTime()) / 1000) -  timestamp2;
-      var  daysDifference  =  Math.floor(difference / 1000 / 60 / 60 / 24);
+function daysLeft(timestamp2) {
+  var difference = ((new Date().getTime()) / 1000) - timestamp2;
+  var daysDifference = Math.floor(difference / 1000 / 60 / 60 / 24);
 
-      return  daysDifference;
+  return daysDifference;
 }

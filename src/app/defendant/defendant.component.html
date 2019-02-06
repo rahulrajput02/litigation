@@ -10,7 +10,7 @@
     <div class="jumbotron jumbotron-fluid">
       <div class="heading">
         <h2>
-          Demand Letters
+          Defendant Dashboard
         </h2>
       </div>
     </div>
@@ -39,18 +39,18 @@
           <td>{{data.initiationTimestamp}}</td>
           <td>{{daysLeft[i]}}</td>
           <td>
-            <a class="menu_links" (click)="acknowledge(i)" *ngIf="data.demandLetterAcknowledgeStatus == 'false'">
+            <a class="menu_links" (click)="acknowledge(i)" *ngIf="data.demandLetterAcknowledgeStatus == false">
               <img src="assets/img_167389.png" style="width: 26px; margin-left:2vw" />
             </a>
-            <a class="menu_links" *ngIf="data.demandLetterAcknowledgeStatus == 'true'">
+            <a class="menu_links" *ngIf="data.demandLetterAcknowledgeStatus == true">
               <img src="assets/tick.png" style="width: 24px; margin-left:2vw; cursor:default" />
             </a>
           </td>
           <td>
-            <a class="menu_links" (click)="pdfDownload(data.letterId)" *ngIf="data.demandLetterAcknowledgeStatus == 'true'">
+            <a class="menu_links" (click)="pdfDownload(data.letterId)" *ngIf="data.demandLetterAcknowledgeStatus == true">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 30px" />
             </a>
-            <a class="menu_links" *ngIf="data.demandLetterAcknowledgeStatus == 'false'">
+            <a class="menu_links" *ngIf="data.demandLetterAcknowledgeStatus == false">
               <img title="Please acknowledge first" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4r2ZjW06FOGw5YKI0t9BJZm3N1l8_F5tkCLVyF5yMjHEShGrJrg" style="width: 30px; cursor: no-drop" />
             </a>
           </td>
